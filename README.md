@@ -59,6 +59,22 @@
 - Master tuning (432Hz / 440Hz)
 - Modern **glass-morphism UI** with vintage aesthetic
 
+### **Real-time Response**
+
+The oscilloscope display updates instantly as you:
+
+<div align="center">
+
+### OSC Display
+![OSCD](Screenshots/OscDisplay.png)
+
+</div>
+
+- 🎛️ **Adjust oscillators** - Watch waveforms transform in real-time
+- 🔧 **Sweep the filter** - See harmonics being carved
+- 🌊 **Apply LFO** - Visualize cyclic modulation
+- 🎚️ **Tweak envelopes** - Observe attack, decay, sustain, and release
+- ⚡ **Play notes** - Watch the sound breathe with velocity
 
 ## 🎯 **Design Philosophy**
 

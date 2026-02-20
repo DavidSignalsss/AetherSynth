@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aether Synth</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="synth-header">
+            <div class="logo">
+                <h1>Aether Synth</h1>
+                <span
+                    style="font-size: 0.7rem; color: var(--color-vco); letter-spacing: 1px; display: block; margin-top: -5px;">By
+                    David Signals</span>
+            </div>
+            <div class="oled-container">
+                <canvas id="oled-display"></canvas>
+            </div>
+            <div class="header-controls">
+                <button id="start-audio-btn" class="pill-btn primary">Start Audio</button>
+                <button id="help-btn" class="pill-btn">Help</button>
+                <button id="settings-btn" class="pill-btn">Settings</button>
+            </div>
+        </header>
+
+        <!-- Main Synth Interface -->
+        <main class="synth-interface">
+            <!-- Row 1: Oscillators & Mixer -->
+            <section class="module-row">
+                <!-- VCO 1 -->
+                <div class="module vco-module" id="vco1">
+                    <div class="module-header">VCO 1</div>
+                    <div class="module-content">
+                        <div class="control-group">
+                            <label>Wave</label>
+                            <select id="vco1-wave">
+                                <option value="sawtooth">Saw</option>
+                                <option value="pulse">Pulse</option>
+                                <option value="triangle">Tri</option>
+                                <option value="sine">Sine</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Octave</label>
+                            <div class="toggle-switch-container">
+                                <input type="range" id="vco1-octave" min="-2" max="2" step="1" value="0"
+                                    class="toggle-switch" data-tooltip="Octave">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Detune</label>
+                            <div class="knob-wrapper">
+                                <div class="knob-container">
+                                    <input type="range" id="vco1-detune" min="-1200" max="1200" value="0" class="knob"
+                                        data-tooltip="Detune">
+                                    <div class="knob-visual"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Mix</label>
+                            <div class="knob-wrapper">
+                                <div class="knob-container">
+                                    <input type="range" id="vco1-gain" min="0" max="1" step="0.01" value="0.8"
+                                        class="knob" data-tooltip="Level">
+                                    <div class="knob-visual"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VCO 2 -->
+                <div class="module vco-module" id="vco2">
+                    <div class="module-header">VCO 2</div>
+                    <div class="module-content">
+                        <div class="control-group">
+                            <label>Wave</label>
+                            <select id="vco2-wave">
+                                <option value="sawtooth">Saw</option>
+                                <option value="pulse">Pulse</option>
+                                <option value="triangle">Tri</option>
+                                <option value="sine">Sine</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Octave</label>
+                            <div class="toggle-switch-container">
+                                <input type="range" id="vco2-octave" min="-2" max="2" step="1" value="0"
+                                    class="toggle-switch" data-tooltip="Octave">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Detune</label>
+                            <div class="knob-wrapper">
+                                <div class="knob-container">
+                                    <input type="range" id="vco2-detune" min="-1200" max="1200" value="0" class="knob"
+                                        data-tooltip="Detune">
+                                    <div class="knob-visual"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Mix</label>
+                            <div class="knob-wrapper">
+                                <div class="knob-container">
+                                    <input type="range" id="vco2-gain" min="0" max="1" step="0.01" value="0"
+                                        class="knob" data-tooltip="Level">
+                                    <div class="knob-visual"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VCO 3 -->
+                <div class="module vco-module" id="vco3">
+                    <div class="module-header">VCO 3</div>
+                    <div class="module-content">
+                        <div class="control-group">
+                            <label>Wave</label>
+                            <select id="vco3-wave">
+                                <option value="sawtooth">Saw</option>
+                                <option value="pulse">Pulse</option>
+                                <option value="triangle">Tri</option>
+                                <option value="sine">Sine</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Octave</label>
+                            <div class="toggle-switch-container">
+                                <input type="range" id="vco3-octave" min="-2" max="2" step="1" value="-1"
+                                    class="toggle-switch" data-tooltip="Octave">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Detune</label>
+                            <div class="knob-wrapper">
+                                <div class="knob-container">
+                                    <input type="range" id="vco3-detune" min="-1200" max="1200" value="0" class="knob"
+                                        data-tooltip="Detune">
+                                    <div class="knob-visual"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Mix</label>
+                            <div class="knob-wrapper">
+                                <div class="knob-container">
+                                    <input type="range" id="vco3-gain" min="0" max="1" step="0.01" value="0"
+                                        class="knob" data-tooltip="Level">
+                                    <div class="knob-visual"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Row 2: Filter & Amp -->
+            <section class="module-row">
+                <!-- Filter -->
+                <div class="module filter-module">
+                    <div class="module-header">Filter (VCF)</div>
+                    <div class="module-content">
+                        <div class="control-group">
+                            <label>Cutoff</label>
+                            <div class="knob-wrapper large">
+                                <div class="knob-container large">
+                                    <input type="range" id="filter-cutoff" min="20" max="20000" step="1" value="2000"
+                                        class="knob" data-tooltip="Freq">
+                                    <div class="knob-visual"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Resonance</label>
+                            <div class="knob-wrapper">
+                                <div class="knob-container">
+                                    <input type="range" id="filter-res" min="0" max="20" step="0.1" value="1"
+                                        class="knob" data-tooltip="Res">
+                                    <div class="knob-visual"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Env Amt</label>
+                            <div class="knob-wrapper">
+                                <div class="knob-container">
+                                    <input type="range" id="filter-env-amt" min="0" max="10000" step="10" value="2000"
+                                        class="knob" data-tooltip="Amt">
+                                    <div class="knob-visual"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="adsr-group">
+                            <div class="fader-group">
+                                <input type="range" id="filter-attack" min="0.01" max="2" step="0.01" value="0.01"
+                                    class="fader" data-tooltip="Attack">
+                            </div>
+                            <div class="fader-group">
+                                <input type="range" id="filter-decay" min="0.01" max="2" step="0.01" value="0.2"
+                                    class="fader" data-tooltip="Decay">
+                            </div>
+                            <div class="fader-group">
+                                <input type="range" id="filter-sustain" min="0" max="1" step="0.01" value="0.5"
+                                    class="fader" data-tooltip="Sustain">
+                            </div>
+                            <div class="fader-group">
+                                <input type="range" id="filter-release" min="0.01" max="5" step="0.01" value="0.5"
+                                    class="fader" data-tooltip="Release">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Amplifier -->
+                <div class="module amp-module">
+                    <div class="module-header">Amplifier (VCA)</div>
+                    <div class="module-content">
+                        <div class="control-group">
+                            <label>Master Vol</label>
+                            <div class="knob-wrapper">
+                                <div class="knob-container">
+                                    <input type="range" id="master-gain" min="0" max="1" step="0.01" value="0.5"
+                                        class="knob" data-tooltip="Volume">
+                                    <div class="knob-visual"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="adsr-group">
+                            <div class="fader-group">
+                                <input type="range" id="amp-attack" min="0.01" max="2" step="0.01" value="0.01"
+                                    class="fader" data-tooltip="Attack">
+                            </div>
+                            <div class="fader-group">
+                                <input type="range" id="amp-decay" min="0.01" max="2" step="0.01" value="0.1"
+                                    class="fader" data-tooltip="Decay">
+                            </div>
+                            <div class="fader-group">
+                                <input type="range" id="amp-sustain" min="0" max="1" step="0.01" value="0.8"
+                                    class="fader" data-tooltip="Sustain">
+                            </div>
+                            <div class="fader-group">
+                                <input type="range" id="amp-release" min="0.01" max="5" step="0.01" value="0.3"
+                                    class="fader" data-tooltip="Release">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Row 3: Modulation & Effects & EQ -->
+            <section class="module-row">
+                <!-- LFOs -->
+                <div class="module lfo-module">
+                    <div class="module-header">LFO 1</div>
+                    <div class="module-content">
+                        <div class="control-group">
+                            <label>Wave</label>
+                            <select id="lfo1-wave">
+                                <option value="sine">Sine</option>
+                                <option value="triangle">Tri</option>
+                                <option value="square">Square</option>
+                                <option value="sawtooth">Saw</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Rate</label>
+                            <div class="knob-wrapper">
+                                <div class="knob-container">
+                                    <input type="range" id="lfo1-rate" min="0.1" max="20" step="0.1" value="5"
+                                        class="knob" data-tooltip="Rate">
+                                    <div class="knob-visual"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Amount</label>
+                            <div class="knob-wrapper">
+                                <div class="knob-container">
+                                    <input type="range" id="lfo1-amount" min="0" max="1000" step="1" value="0"
+                                        class="knob" data-tooltip="Amount">
+                                    <div class="knob-visual"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Dest</label>
+                            <select id="lfo1-dest">
+                                <option value="pitch">Pitch</option>
+                                <option value="filter">Filter</option>
+                                <option value="amp">Amp</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Effects -->
+                <div class="module fx-module">
+                    <div class="module-header">Effects</div>
+                    <div class="module-content">
+                        <div class="effect-group">
+                            <h3>Delay</h3>
+                            <div class="control-row">
+                                <div class="knob-group">
+                                    <div class="knob-wrapper small">
+                                        <div class="knob-container small">
+                                            <input type="range" id="delay-time" min="0" max="1" step="0.01" value="0.3"
+                                                class="knob" data-tooltip="Time">
+                                            <div class="knob-visual"></div>
+                                        </div>
+                                    </div>
+                                    <label>Time</label>
+                                </div>
+                                <div class="knob-group">
+                                    <div class="knob-wrapper small">
+                                        <div class="knob-container small">
+                                            <input type="range" id="delay-feedback" min="0" max="0.9" step="0.01"
+                                                value="0.4" class="knob" data-tooltip="Fdbk">
+                                            <div class="knob-visual"></div>
+                                        </div>
+                                    </div>
+                                    <label>Fdbk</label>
+                                </div>
+                                <div class="knob-group">
+                                    <div class="knob-wrapper small">
+                                        <div class="knob-container small">
+                                            <input type="range" id="delay-mix" min="0" max="1" step="0.01" value="0"
+                                                class="knob" data-tooltip="Mix">
+                                            <div class="knob-visual"></div>
+                                        </div>
+                                    </div>
+                                    <label>Mix</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="effect-group">
+                            <h3>Reverb</h3>
+                            <div class="control-row">
+                                <div class="knob-group">
+                                    <div class="knob-wrapper small">
+                                        <div class="knob-container small">
+                                            <input type="range" id="reverb-decay" min="0.1" max="5" step="0.1" value="2"
+                                                class="knob" data-tooltip="Decay">
+                                            <div class="knob-visual"></div>
+                                        </div>
+                                    </div>
+                                    <label>Decay</label>
+                                </div>
+                                <div class="knob-group">
+                                    <div class="knob-wrapper small">
+                                        <div class="knob-container small">
+                                            <input type="range" id="reverb-mix" min="0" max="1" step="0.01" value="0"
+                                                class="knob" data-tooltip="Mix">
+                                            <div class="knob-visual"></div>
+                                        </div>
+                                    </div>
+                                    <label>Mix</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="effect-group">
+                            <h3>Chorus</h3>
+                            <div class="control-row">
+                                <div class="knob-group">
+                                    <div class="knob-wrapper small">
+                                        <div class="knob-container small">
+                                            <input type="range" id="chorus-rate" min="0.1" max="10" step="0.1"
+                                                value="1.5" class="knob" data-tooltip="Rate">
+                                            <div class="knob-visual"></div>
+                                        </div>
+                                    </div>
+                                    <label>Rate</label>
+                                </div>
+                                <div class="knob-group">
+                                    <div class="knob-wrapper small">
+                                        <div class="knob-container small">
+                                            <input type="range" id="chorus-depth" min="0" max="1" step="0.01"
+                                                value="0.5" class="knob" data-tooltip="Depth">
+                                            <div class="knob-visual"></div>
+                                        </div>
+                                    </div>
+                                    <label>Depth</label>
+                                </div>
+                                <div class="knob-group">
+                                    <div class="knob-wrapper small">
+                                        <div class="knob-container small">
+                                            <input type="range" id="chorus-mix" min="0" max="1" step="0.01" value="0"
+                                                class="knob" data-tooltip="Mix">
+                                            <div class="knob-visual"></div>
+                                        </div>
+                                    </div>
+                                    <label>Mix</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Equalizer (New) -->
+                <div class="module eq-module">
+                    <div class="module-header">Equalizer</div>
+                    <div class="module-content">
+                        <div class="control-group">
+                            <label>Low</label>
+                            <div class="knob-wrapper">
+                                <div class="knob-container">
+                                    <input type="range" id="eq-low" min="-12" max="12" step="0.1" value="0" class="knob"
+                                        data-tooltip="Low Gain">
+                                    <div class="knob-visual"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Mid</label>
+                            <div class="knob-wrapper">
+                                <div class="knob-container">
+                                    <input type="range" id="eq-mid" min="-12" max="12" step="0.1" value="0" class="knob"
+                                        data-tooltip="Mid Gain">
+                                    <div class="knob-visual"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>High</label>
+                            <div class="knob-wrapper">
+                                <div class="knob-container">
+                                    <input type="range" id="eq-high" min="-12" max="12" step="0.1" value="0"
+                                        class="knob" data-tooltip="High Gain">
+                                    <div class="knob-visual"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Tooltip -->
+        <div id="tooltip" class="tooltip hidden">0.00</div>
+
+        <!-- Keyboard -->
+        <div class="keyboard-container">
+            <div id="virtual-keyboard" class="virtual-keyboard">
+                <!-- Keys generated by JS -->
+            </div>
+            <div class="keyboard-controls">
+                <button id="octave-down" class="btn-small">
+                    << /button>
+                        <span id="current-octave">OCT 3</span>
+                        <button id="octave-up" class="btn-small">></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="onboarding-modal" class="modal-overlay">
+        <div class="modal-content glass-panel">
+            <h2>Welcome to Aether Synth</h2>
+            <p
+                style="text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; color: #888; margin-bottom: 1rem;">
+                By David Rábago Félix</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="icon">🔊</div>
+                    <p>Start Audio to enable sound.</p>
+                </div>
+                <div class="step">
+                    <div class="icon">🎹</div>
+                    <p>Play notes using your keyboard (A-K) or the screen.</p>
+                </div>
+                <div class="step">
+                    <div class="icon">🎛️</div>
+                    <p>Tweak the filters and effects to sculpt your sound.</p>
+                </div>
+            </div>
+            <button id="close-modal-btn" class="pill-btn primary large">Let's Create</button>
+        </div>
+    </div>
+
+    <div id="settings-modal" class="modal-overlay hidden">
+        <div class="modal-content glass-panel">
+            <h2>Settings</h2>
+            <div class="setting-row">
+                <label>Output Device</label>
+                <select id="audio-output-select">
+                    <option value="default">Default Output</option>
+                </select>
+            </div>
+            <div class="setting-row">
+                <label>Polyphony</label>
+                <input type="range" id="polyphony-count" min="1" max="8" value="4">
+                <span id="polyphony-display">4 Voices</span>
+            </div>
+            <button id="close-settings-btn" class="pill-btn">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

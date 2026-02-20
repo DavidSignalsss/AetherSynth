@@ -109,7 +109,7 @@ Creating an intuitive yet professional environment for sound design.
 
 4. **Shape Your Tone**
    - Experiment with the filter cutoff and resonance
-   - Modulate with LFOs
+   - Modulate with LFOs (Pitch, Filter & Amp)
    - Add effects (Delay, Chorus, Reverb)
 
 ### **First-Time User?**
